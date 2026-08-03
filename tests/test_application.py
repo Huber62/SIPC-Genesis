@@ -1,0 +1,19 @@
+from fastapi.testclient import TestClient
+
+from backend.app.main import app
+
+client = TestClient(app)
+
+
+def test_health_endpoint() -> None:
+    response = client.get("/api/health")
+
+    assert response.status_code == 200
+    assert response.json()["status"] == "ok"
+
+
+def test_home_page() -> None:
+    response = client.get("/")
+
+    assert response.status_code == 200
+    assert "SIPC Genesis" in response.text
