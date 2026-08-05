@@ -17,3 +17,13 @@ def test_home_page() -> None:
 
     assert response.status_code == 200
     assert "SIPC Genesis" in response.text
+
+
+def test_gis_status_endpoint() -> None:
+    response = client.get("/api/gis/status")
+
+    assert response.status_code == 200
+    payload = response.json()
+    assert "ready" in payload
+    assert "datasets" in payload
+    assert isinstance(payload["datasets"], list)
